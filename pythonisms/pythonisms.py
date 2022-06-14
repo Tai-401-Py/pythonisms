@@ -44,6 +44,7 @@ class Pythonisms:
                 if item.type() == bool:
                     return('Can not sum a boolean value')
             except:
-                raise Exception
+                return('Unable to comply with your request, you may be mixing object types in collection')
+                
 
 
