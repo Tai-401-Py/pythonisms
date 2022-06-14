@@ -1,4 +1,21 @@
+import re
+import string
 import time
+from functools import wraps
+
+# Start Wraps
+def timed_method(func):
+    '''
+    Wrapper times the amount of time it takes to complete a method
+    '''
+    def wrapper(*args, **kwargs):
+        ts = time.time()
+        result = func(*args,**kwargs)
+        te = time.time()
+        print(f'{func.__name__} took {te-ts} seconds to complete')
+        return result
+    return wrapper
+
 
 class Pythonisms:
     '''
@@ -13,11 +30,20 @@ class Pythonisms:
             string += f" {item}"
         return string
 
-    def __sum__(self):
-        
-
+    @timed_method       
     def sum_collection(self):
-        start_time = time.time()
         if not self.collection:
-            print(f'This process was completed in {time.time() - start_time} seconds')
             return 'There is no collection to add!'
+        for item in self.collection:
+            response = None
+            try:
+                if item.type() == string:
+                    response += f'{item} '
+                if item.type()== int or float:
+                    response += item
+                if item.type() == bool:
+                    return('Can not sum a boolean value')
+            except:
+                raise Exception
+
+
